@@ -1,0 +1,16 @@
+
+BEGIN:RECORD
+weight: 10
+color: red
+time: 20220129T123056
+identifier: ID123
+units: kg
+END:RECORD
+
+BEGIN:RECORD
+weight: 15
+color: blue
+time: 20220129T120056
+identifier: ID124
+units: kg
+END:RECORD

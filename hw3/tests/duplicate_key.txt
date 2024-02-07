@@ -1,0 +1,9 @@
+
+BEGIN:RECORD
+weight: 10
+color: red
+weight: 12
+time: 20220129T123456
+identifier: ID123
+units: kg
+END:RECORD

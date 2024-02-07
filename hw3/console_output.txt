@@ -1,0 +1,184 @@
+(base) qayyuma@nbp-63-247 hw2 % npm test
+
+> hw2@1.0.0 test
+> ./node_modules/jasmine/bin/jasmine.js
+
+Randomized with seed 15427
+Started
+Console Output: []
+Console Error Output: []
+.Captured: Processed Record: {
+  "weight": "10",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Errors! Invalid format for color: orangatan
+Console Output: [
+  'Processed Record: {\n' +
+    '  "weight": "10",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid format for color: orangatan' ]
+.Captured: Invalid file extension!
+Captured: File validation failed!
+Console Output: []
+Console Error Output: [ 'Invalid file extension!', 'File validation failed!' ]
+.Captured: Processed Record: {
+  "color": "red",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Errors! Invalid key: height,Invalid key: size
+Console Output: [
+  'Processed Record: {\n' +
+    '  "color": "red",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid key: height,Invalid key: size' ]
+.Captured: Processed Record: {
+  "color": "red",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Errors! Invalid format for weight: -10
+Console Output: [
+  'Processed Record: {\n' +
+    '  "color": "red",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid format for weight: -10' ]
+.Captured: Processed Record: {
+  "weight": "15",
+  "color": "blue",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID124",
+  "units": "kg"
+}
+Captured: Processed Record: {
+  "weight": "10",
+  "color": "red",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Console Output: [
+  'Processed Record: {\n' +
+    '  "weight": "15",\n' +
+    '  "color": "blue",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID124",\n' +
+    '  "units": "kg"\n' +
+    '}',
+  'Processed Record: {\n' +
+    '  "weight": "10",\n' +
+    '  "color": "red",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: []
+.Captured: Processed Record: {
+  "weight": "10",
+  "color": "red",
+  "time": false,
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Errors! Invalid format for time: 29-01-2022
+Console Output: [
+  'Processed Record: {\n' +
+    '  "weight": "10",\n' +
+    '  "color": "red",\n' +
+    '  "time": false,\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid format for time: 29-01-2022' ]
+.Captured: Processed Record: {
+  "weight": "10",
+  "color": "red",
+  "time": "January 29, 2022 at 12:30 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Processed Record: {
+  "weight": "15",
+  "color": "blue",
+  "time": "January 29, 2022 at 12:00 PM",
+  "identifier": "ID124",
+  "units": "kg"
+}
+Console Output: [
+  'Processed Record: {\n' +
+    '  "weight": "10",\n' +
+    '  "color": "red",\n' +
+    '  "time": "January 29, 2022 at 12:30 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}',
+  'Processed Record: {\n' +
+    '  "weight": "15",\n' +
+    '  "color": "blue",\n' +
+    '  "time": "January 29, 2022 at 12:00 PM",\n' +
+    '  "identifier": "ID124",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: []
+.Captured: Processed Record: {
+  "weight": "10",
+  "color": "red",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Errors! Duplicate key found in record: weight
+Console Output: [
+  'Processed Record: {\n' +
+    '  "weight": "10",\n' +
+    '  "color": "red",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Duplicate key found in record: weight' ]
+.Captured: Errors! Last record not properly ended with END:RECORD
+Console Output: []
+Console Error Output: [ 'Errors! Last record not properly ended with END:RECORD' ]
+.Captured: Processed Record: {
+  "color": "red",
+  "time": "January 29, 2022 at 12:34 PM",
+  "identifier": "ID123",
+  "units": "kg"
+}
+Captured: Errors! Invalid line format: weight-10
+Console Output: [
+  'Processed Record: {\n' +
+    '  "color": "red",\n' +
+    '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    '  "identifier": "ID123",\n' +
+    '  "units": "kg"\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid line format: weight-10' ]
+.
+
+
+11 specs, 0 failures
+Finished in 0.051 seconds
+Randomized with seed 15427 (jasmine --random=true --seed=15427)
