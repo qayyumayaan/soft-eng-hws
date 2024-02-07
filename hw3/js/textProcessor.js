@@ -3,8 +3,8 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['weight', 'color', 'time', 'identifier', 'units'];
-const VALID_COLORS = ["black", "white", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "gray", "pink"];
+const VALID_KEYS = ['weight', 'status', 'time', 'identifier', 'units'];
+const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
 
 
 async function textProcessor(inputString) {
@@ -122,8 +122,8 @@ async function processTextFile(filePath) {
 
 function validateKeyValue(key, value) {
     switch (key) {
-        case 'color':
-            return colorIsValid(value);
+        case 'status':
+            return statusIsValid(value);
         case 'weight':
             return weightIsValid(value);
         case 'time':
@@ -133,8 +133,8 @@ function validateKeyValue(key, value) {
     }
 }
 
-function colorIsValid(value) {
-    return VALID_COLORS.includes(value.toLowerCase());
+function statusIsValid(value) {
+    return VALID_STATUSES.includes(value.toLowerCase());
 }
 
 function weightIsValid(value) {
