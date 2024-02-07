@@ -3,8 +3,12 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['weight', 'status', 'dtstart', 'dtstamp', 'identifier', 'method', 'units'];
+const VALID_KEYS = ['status', 'dtstart', 'dtstamp', 'identifier', 'method'];
 const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const PHONE_REGEX = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+
 
 /*
 
@@ -136,8 +140,8 @@ function validateKeyValue(key, value) {
     switch (key) {
         case 'status':
             return statusIsValid(value);
-        case 'weight':
-            return weightIsValid(value);
+        case 'attendee':
+            return attendeeIsValid(value);
         case 'dtstart':
             return dateCreator(value) !== false;  
         case 'dtstamp':
