@@ -3,16 +3,16 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['weight', 'status', 'dtstart', 'identifier', 'units'];
+const VALID_KEYS = ['weight', 'status', 'dtstart', 'dtstamp', 'identifier', 'units'];
 const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
 
 /*
 
 need to include: 
-ATTENDEE, (email or telephone)
-DTSTART, (replace time)
-DTSTAMP, 
-METHOD, (there is only METHOD:REQUEST)
+ATTENDEE, (email or telephone) 
+DTSTART, (replace time) (done)
+DTSTAMP, (add another time object) (done)
+METHOD, (there is only METHOD:REQUEST) 
 STATUS (replace color) (done)
 
 */
@@ -119,10 +119,14 @@ async function processTextFile(filePath) {
                 if (lowerKey === 'dtstart') {
                     currentRecord[lowerKey] = false;
                 }
+                if (lowerKey === 'dtstamp') {
+                    currentRecord[lowerKey] = false;
+                }
                 return;
             }
     
-            currentRecord[lowerKey] = (lowerKey === 'dtstart') ? dateCreator(value) : value;
+    
+            currentRecord[lowerKey] = (lowerKey === 'dtstart' || lowerKey === 'dtstamp') ? dateCreator(value) : value;
             keysSet.add(lowerKey);
         } else {
             errors.push(`Invalid key: ${key}`);
@@ -138,6 +142,8 @@ function validateKeyValue(key, value) {
             return weightIsValid(value);
         case 'dtstart':
             return dateCreator(value) !== false;  
+        case 'dtstamp':
+            return dateCreator(value) !== false;  
         default:
             return true;
     }
@@ -152,9 +158,9 @@ function weightIsValid(value) {
     return Number.isInteger(number) && number > 0;
 }
 
-function dateIsValid(value) {
-    return dateCreator(value) !== null;
-}
+// function dateIsValid(value) {
+//     return dateCreator(value) !== null;
+// }
 
 function sortRecords(records) {
     return records.filter(record => record.dtstart) 
