@@ -19,7 +19,7 @@ async function textProcessor(inputString) {
         const records = await processTextFile(inputString);
         if (records.length > 0) {
             const sortedRecords = sortRecords(records);
-            await writeSortedRecordsToFile(sortedRecords, 'records-new.txt');
+            await writeSortedRecordsToFile(sortedRecords, 'calendar-new.ical');
         }
     } catch (err) {
         console.error("Error processing file:", err.message);
@@ -85,7 +85,7 @@ async function processTextFile(filePath) {
             errors.push('END:VCALENDAR found without a corresponding BEGIN:VCALENDAR');
         } else {
             console.log(`Processed Record: ${JSON.stringify(currentRecord, null, 2)}`);
-            records.push({ ...currentRecord }); // Shallow copy to preserve record state
+            records.push({ ...currentRecord }); 
         }
         recordStarted = false;
     }
