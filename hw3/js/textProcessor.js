@@ -152,12 +152,16 @@ function validateKeyValue(key, value) {
 }
 
 function statusIsValid(value) {
-    return VALID_STATUSES.includes(value.toLowerCase());
+    return VALID_STATUSES.includes(value.toUpperCase());
 }
 
 function weightIsValid(value) {
     const number = parseInt(value, 10);
     return Number.isInteger(number) && number > 0;
+}
+
+function attendeeIsValid(value) {
+    return EMAIL_REGEX.test(value) || PHONE_REGEX.test(value);
 }
 
 // function dateIsValid(value) {
