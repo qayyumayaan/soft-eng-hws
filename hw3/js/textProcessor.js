@@ -41,8 +41,20 @@ async function textProcessor(inputString) {
 }
 
 async function fileIsValid(inputString) {
-    if (!inputString.toLowerCase().endsWith(VALID_FILE_EXTENSION)) {
-        console.error("Invalid file extension!");
+
+    const lowerCaseInput = inputString.toLowerCase();
+
+    let extensionIsValid = false
+    
+    for (let i = 0; i < validExtensions.length; i++) {
+        const extension = validExtensions[i];
+        if (lowerCaseInput.endsWith(extension.toLowerCase())) {
+            return true;
+        }
+    }
+
+    if (extensionIsValid == false) {
+        console.error(`Invalid file extension!`);
         return false;
     }
 
