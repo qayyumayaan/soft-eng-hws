@@ -3,7 +3,7 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['weight', 'status', 'dtstart', 'dtstamp', 'identifier', 'units'];
+const VALID_KEYS = ['weight', 'status', 'dtstart', 'dtstamp', 'identifier', 'method', 'units'];
 const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
 
 /*
@@ -12,7 +12,7 @@ need to include:
 ATTENDEE, (email or telephone) 
 DTSTART, (replace time) (done)
 DTSTAMP, (add another time object) (done)
-METHOD, (there is only METHOD:REQUEST) 
+METHOD, (there is only METHOD:REQUEST) (done) 
 STATUS (replace color) (done)
 
 */
@@ -107,7 +107,7 @@ async function processTextFile(filePath) {
             errors.push(`Invalid line format: ${line}`);
             return;
         }
-
+    
         const lowerKey = key.toLowerCase();
         if (VALID_KEYS.includes(lowerKey)) {
             if (keysSet.has(lowerKey)) {
@@ -116,22 +116,20 @@ async function processTextFile(filePath) {
             }
             if (!validateKeyValue(lowerKey, value)) {
                 errors.push(`Invalid format for ${lowerKey}: ${value}`);
-                if (lowerKey === 'dtstart') {
-                    currentRecord[lowerKey] = false;
-                }
-                if (lowerKey === 'dtstamp') {
-                    currentRecord[lowerKey] = false;
-                }
                 return;
             }
     
+            if (lowerKey === 'method' && value.toUpperCase() === 'REQUEST') {
+                currentRecord['isSchedulingRequest'] = true;
+            } else {
+                currentRecord[lowerKey] = (lowerKey === 'dtstart' || lowerKey === 'dtstamp') ? dateCreator(value) : value;
+            }
     
-            currentRecord[lowerKey] = (lowerKey === 'dtstart' || lowerKey === 'dtstamp') ? dateCreator(value) : value;
             keysSet.add(lowerKey);
         } else {
             errors.push(`Invalid key: ${key}`);
         }
-    }
+    }    
 }
 
 function validateKeyValue(key, value) {
