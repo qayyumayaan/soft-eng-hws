@@ -3,9 +3,19 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['weight', 'status', 'time', 'identifier', 'units'];
+const VALID_KEYS = ['weight', 'status', 'dtstart', 'identifier', 'units'];
 const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
 
+/*
+
+need to include: 
+ATTENDEE, (email or telephone)
+DTSTART, (replace time)
+DTSTAMP, 
+METHOD, (there is only METHOD:REQUEST)
+STATUS (replace color) (done)
+
+*/
 
 async function textProcessor(inputString) {
     if (!await fileIsValid(inputString)) {
@@ -106,13 +116,13 @@ async function processTextFile(filePath) {
             }
             if (!validateKeyValue(lowerKey, value)) {
                 errors.push(`Invalid format for ${lowerKey}: ${value}`);
-                if (lowerKey === 'time') {
+                if (lowerKey === 'dtstart') {
                     currentRecord[lowerKey] = false;
                 }
                 return;
             }
     
-            currentRecord[lowerKey] = (lowerKey === 'time') ? dateCreator(value) : value;
+            currentRecord[lowerKey] = (lowerKey === 'dtstart') ? dateCreator(value) : value;
             keysSet.add(lowerKey);
         } else {
             errors.push(`Invalid key: ${key}`);
@@ -126,7 +136,7 @@ function validateKeyValue(key, value) {
             return statusIsValid(value);
         case 'weight':
             return weightIsValid(value);
-        case 'time':
+        case 'dtstart':
             return dateCreator(value) !== false;  
         default:
             return true;
@@ -147,8 +157,8 @@ function dateIsValid(value) {
 }
 
 function sortRecords(records) {
-    return records.filter(record => record.time) 
-        .sort((a, b) => new Date(a.time) - new Date(b.time));
+    return records.filter(record => record.dtstart) 
+        .sort((a, b) => new Date(a.dtstart) - new Date(b.dtstart));
 }
 
 async function writeSortedRecordsToFile(sortedRecords, fileName) {
