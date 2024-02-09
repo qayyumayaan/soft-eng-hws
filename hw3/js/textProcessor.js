@@ -126,7 +126,7 @@ async function processTextFile(filePath) {
     
         const lowerKey = key.toLowerCase();
         if (VALID_KEYS.includes(lowerKey)) {
-            if (keysSet.has(lowerKey)) {
+            if (lowerKey !== 'attendee' && keysSet.has(lowerKey)) {
                 errors.push(`Duplicate key found in record: ${key}`);
                 return;
             }
@@ -137,15 +137,46 @@ async function processTextFile(filePath) {
     
             if (lowerKey === 'method' && value.toUpperCase() === 'REQUEST') {
                 currentRecord['isSchedulingRequest'] = true;
+            } else if (lowerKey === 'dtstart' || lowerKey === 'dtstamp') {
+                currentRecord[lowerKey] = dateCreator(value);
+            } else if (lowerKey === 'attendee') {
+                // Initialize the attendees array if it doesn't exist
+                if (!currentRecord['attendees']) {
+                    currentRecord['attendees'] = [];
+                }
+                // Add the attendee to the array
+                currentRecord['attendees'].push(value);
             } else {
-                currentRecord[lowerKey] = (lowerKey === 'dtstart' || lowerKey === 'dtstamp') ? dateCreator(value) : value;
+                currentRecord[lowerKey] = value;
             }
     
             keysSet.add(lowerKey);
         } else {
             errors.push(`Invalid key: ${key}`);
         }
-    }    
+    }
+    
+    
+    function validateKeyValue(key, value) {
+        switch (key) {
+            case 'status':
+                return statusIsValid(value);
+            case 'attendee':
+                return attendeeIsValid(value.split(':')[1]); // Extract email or phone from the value
+            case 'dtstart':
+            case 'dtstamp':
+                return dateCreator(value.replace('Z', '')) !== false; // Remove 'Z' if present for UTC time
+            default:
+                return true;
+        }
+    }
+    
+    function attendeeIsValid(attendeeValue) {
+        return EMAIL_REGEX.test(attendeeValue) || PHONE_REGEX.test(attendeeValue);
+    }
+     
+    
+    
 }
 
 function validateKeyValue(key, value) {
