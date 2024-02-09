@@ -3,7 +3,7 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['status', 'dtstart', 'dtstamp', 'identifier', 'method'];
+const VALID_KEYS = ['status', 'dtstart', 'dtstamp', 'identifier', 'method', 'attendee', 'prodid', 'version', 'summary', 'uid'];
 const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -46,8 +46,8 @@ async function fileIsValid(inputString) {
 
     let extensionIsValid = false
     
-    for (let i = 0; i < validExtensions.length; i++) {
-        const extension = validExtensions[i];
+    for (let i = 0; i < VALID_FILE_EXTENSION.length; i++) {
+        const extension = VALID_FILE_EXTENSION[i];
         if (lowerCaseInput.endsWith(extension.toLowerCase())) {
             return true;
         }
