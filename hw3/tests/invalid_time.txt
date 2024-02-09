@@ -1,8 +1,0 @@
-
-BEGIN:RECORD
-weight: 10
-color: red
-time: 29-01-2022
-identifier: ID123
-units: kg
-END:RECORD
