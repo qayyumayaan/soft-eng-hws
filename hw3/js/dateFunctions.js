@@ -1,5 +1,11 @@
 function dateCreator(inputString) {
-    if (inputString.length !== 15) return false;
+  
+    if (inputString.length !== 15) { 
+      if (inputString.length == 16 && inputString.endsWith(("z".toLowerCase()))) {
+      } else {
+        return true;
+      }
+    }
 
     let year = inputString.substring(0, 4);
     let month = inputString.substring(4, 6);
