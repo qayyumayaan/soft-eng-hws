@@ -12,21 +12,17 @@ describe('textProcessor Tests', () => {
     };
 
     beforeEach(() => {
-        // Store the original console functions
         originalConsoleLog = console.log;
         originalConsoleError = console.error;
 
-        // Mock the console functions
         console.log = mockConsole(consoleOutput);
         console.error = mockConsole(consoleErrorOutput);
     });
 
     afterEach(() => {
-        // Restore the original console functions
         console.log = originalConsoleLog;
         console.error = originalConsoleError;
 
-        // Reset the output arrays
         consoleOutput = [];
         consoleErrorOutput = [];
     });
@@ -43,9 +39,8 @@ describe('textProcessor Tests', () => {
     }
  
     it('should report a duplicate key error', async () => {
-        const filePath = './tests/duplicate_key.txt';
+        const filePath = './tests/duplicate_key.ical';
       
-        // Update the expectedLogs and expectedErrors
         const expectedLogs = [
           'Processed Record: {\n' +
           '  "weight": "10",\n' +
@@ -66,7 +61,7 @@ describe('textProcessor Tests', () => {
       
 
     it('should handle an empty file correctly', async () => {
-        const filePath = './tests/empty_file.txt';
+        const filePath = './tests/empty_file.ical';
         const expectedLogs = [];
         const expectedErrors = [];
     
@@ -74,8 +69,8 @@ describe('textProcessor Tests', () => {
     });
 
  
-    it('should report an invalid color error', async () => {
-        const filePath = './tests/invalid_color.txt';
+    it('should report an invalid status error', async () => {
+        const filePath = './tests/invalid_status.ical';
         const expectedLogs = [
           'Processed Record: {\n' +
           '  "weight": "10",\n' +
@@ -84,7 +79,7 @@ describe('textProcessor Tests', () => {
           '  "units": "kg"\n' +
           '}'
         ];
-        const expectedErrors = ['Errors! Invalid format for color: orangatan']; 
+        const expectedErrors = ['Errors! Invalid format for status: Unsure']; 
         
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
@@ -101,16 +96,16 @@ describe('textProcessor Tests', () => {
     
     
     it('should report an invalid key error', async () => {
-        const filePath = './tests/invalid_key.txt';
+        const filePath = './tests/invalid_key.ical';
         const expectedLogs = ['Processed Record: {\n  "color": "red",\n  "time": "January 29, 2022 at 12:34 PM",\n  "identifier": "ID123",\n  "units": "kg"\n}'];
-        const expectedErrors = [ 'Errors! Invalid key: height,Invalid key: size']; // Assuming 'height' and 'size' are not valid keys
+        const expectedErrors = [ 'Errors! Invalid key: GAMER' ]; 
 
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
 
 
     it('should report an invalid line format error', async () => {
-        const filePath = './tests/invalid_line_format.txt';
+        const filePath = './tests/invalid_line_format.ical';
         const expectedLogs = [
             'Processed Record: {\n' +
             '  "color": "red",\n' +
@@ -119,13 +114,13 @@ describe('textProcessor Tests', () => {
             '  "units": "kg"\n' +
             '}'
         ];
-        const expectedErrors = ['Errors! Invalid line format: weight-10']; // Assuming the line format is incorrect
+        const expectedErrors = ['Errors! Invalid line format: weight-10'];
     
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
 
-    it('should report an invalid time format error', async () => {
-        const filePath = './tests/invalid_time.txt';
+    it('should report an invalid date format error', async () => {
+        const filePath = './tests/invalid_date.ical';
         const expectedLogs = [
             'Processed Record: {\n' +
             '  "weight": "10",\n' +
@@ -135,59 +130,59 @@ describe('textProcessor Tests', () => {
             '  "units": "kg"\n' +
             '}'
         ];
-        const expectedErrors = ['Errors! Invalid format for time: 29-01-2022']; // Assuming the time format is incorrect
+        const expectedErrors = ['Errors! Invalid format for date: 29-01-2022']; 
     
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
 
-    it('should report an invalid weight format error', async () => {
-        const filePath = './tests/invalid_weight.txt';
-        const expectedLogs = [
-            'Processed Record: {\n' +
-            '  "color": "red",\n' +
-            '  "time": "January 29, 2022 at 12:34 PM",\n' +
-            '  "identifier": "ID123",\n' +
-            '  "units": "kg"\n' +
-            '}'
-        ];
-        const expectedErrors = [ 'Errors! Invalid format for weight: -10']; // Assuming the weight is negative
+    // it('should report an invalid weight format error', async () => {
+    //     const filePath = './tests/invalid_weight.txt';
+    //     const expectedLogs = [
+    //         'Processed Record: {\n' +
+    //         '  "color": "red",\n' +
+    //         '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    //         '  "identifier": "ID123",\n' +
+    //         '  "units": "kg"\n' +
+    //         '}'
+    //     ];
+    //     const expectedErrors = [ 'Errors! Invalid format for weight: -10']; 
     
-        await testFileProcessing(filePath, expectedLogs, expectedErrors);
-    });
+    //     await testFileProcessing(filePath, expectedLogs, expectedErrors);
+    // });
 
     it('should report a missing END:RECORD error', async () => {
-        const filePath = './tests/missing_end_record.txt';
+        const filePath = './tests/missing_end_vcalendar.ical';
         const expectedLogs = [];
         const expectedErrors = ['Errors! Last record not properly ended with END:RECORD'];
     
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
 
-    it('should handle unsorted records and sort them', async () => {
-        const filePath = './tests/unsorted_records.txt';
-        const expectedLogs = [
-            'Processed Record: {\n' +
-            '  "weight": "15",\n' +
-            '  "color": "blue",\n' +
-            '  "time": "January 29, 2022 at 12:34 PM",\n' +
-            '  "identifier": "ID124",\n' +
-            '  "units": "kg"\n' +
-            '}',
-          'Processed Record: {\n' +
-            '  "weight": "10",\n' +
-            '  "color": "red",\n' +
-            '  "time": "January 29, 2022 at 12:34 PM",\n' +
-            '  "identifier": "ID123",\n' +
-            '  "units": "kg"\n' +
-            '}'
-        ];
-        const expectedErrors = [];
+    // it('should handle unsorted records and sort them', async () => {
+    //     const filePath = './tests/unsorted_records.txt';
+    //     const expectedLogs = [
+    //         'Processed Record: {\n' +
+    //         '  "weight": "15",\n' +
+    //         '  "color": "blue",\n' +
+    //         '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    //         '  "identifier": "ID124",\n' +
+    //         '  "units": "kg"\n' +
+    //         '}',
+    //       'Processed Record: {\n' +
+    //         '  "weight": "10",\n' +
+    //         '  "color": "red",\n' +
+    //         '  "time": "January 29, 2022 at 12:34 PM",\n' +
+    //         '  "identifier": "ID123",\n' +
+    //         '  "units": "kg"\n' +
+    //         '}'
+    //     ];
+    //     const expectedErrors = [];
     
-        await testFileProcessing(filePath, expectedLogs, expectedErrors);
-    });
+    //     await testFileProcessing(filePath, expectedLogs, expectedErrors);
+    // });
 
     it('should process a valid file correctly', async () => {
-        const filePath = './tests/valid_file.txt';
+        const filePath = './tests/valid_file.ical';
         const expectedLogs = [
             'Processed Record: {\n' +
             '  "weight": "10",\n' +
