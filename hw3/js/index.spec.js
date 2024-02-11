@@ -85,10 +85,15 @@ describe('textProcessor Tests', () => {
             '  ]\n' +
             '}'
         ];
-        const expectedErrors = [ 'Errors! Invalid key: GAMERTAG' ]; 
-
+      
+        const expectedErrors = [
+            'Errors! Duplicate key found in record: DTSTAMP'
+        ];
+      
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
-    });
+      });
+      
+      
 
     // it('should report an invalid weight format error', async () => {
     //     const filePath = './tests/invalid_weight.txt';
