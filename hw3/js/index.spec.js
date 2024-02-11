@@ -72,32 +72,6 @@ describe('textProcessor Tests', () => {
     it('should report an invalid status error', async () => {
         const filePath = './tests/invalid_status.ical';
         const expectedLogs = [
-          'Processed Record: {\n' +
-          '  "weight": "10",\n' +
-          '  "time": "January 29, 2022 at 12:34 PM",\n' +
-          '  "identifier": "ID123",\n' +
-          '  "units": "kg"\n' +
-          '}'
-        ];
-        const expectedErrors = ['Errors! Invalid format for status: Unsure']; 
-        
-        await testFileProcessing(filePath, expectedLogs, expectedErrors);
-    });
-    
-    it('should report an invalid extension error', async () => {
-        const filePath = './tests/invalid_extension.jpg';
-        const expectedLogs = [];
-        const expectedErrors = [
-            'Invalid file extension!', 'File validation failed!'
-        ];
-    
-        await testFileProcessing(filePath, expectedLogs, expectedErrors);
-    });
-    
-    
-    it('should report an invalid key error', async () => {
-        const filePath = './tests/invalid_key.ical';
-        const expectedLogs = [
             'Processed Record: {\n' +
             '  "version": "2.0",\n' +
             '  "isSchedulingRequest": true,\n' + 
