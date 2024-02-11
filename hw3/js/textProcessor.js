@@ -3,7 +3,7 @@ const readline = require('readline');
 const { dateCreator } = require('./dateFunctions'); 
 
 const VALID_FILE_EXTENSION = ['.ical', '.ics', '.icalendar', '.ifb'];
-const VALID_KEYS = ['status', 'dtstart', 'dtstamp', 'identifier', 'method', 'attendee', 'prodid', 'version', 'summary', 'uid'];
+const VALID_KEYS = ['status', 'dtstart', 'dtstamp', 'identifier', 'method', 'attendee', 'prodid', 'version', 'summary', 'uid', 'created', 'dtend', 'duration', 'last-modified', 'name', 'organizer'];
 const VALID_STATUSES = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -32,7 +32,8 @@ async function textProcessor(inputString) {
         // console.log(text);
         const records = await processTextFile(inputString);
         if (records.length > 0) {
-            const sortedRecords = sortRecords(records);
+            // const sortedRecords = sortRecords(records);
+            const sortedRecords = records;
             await writeSortedRecordsToFile(sortedRecords, 'calendar-new.ical');
         }
     } catch (err) {
@@ -73,6 +74,7 @@ async function processTextFile(filePath) {
 
     let currentRecord = {};
     let recordStarted = false;
+    let eventStarted = false; 
     let errors = [];
     let keysSet = new Set();
     let records = []; // Array to store all valid records
@@ -82,6 +84,17 @@ async function processTextFile(filePath) {
             handleBeginRecord();
         } else if (line.includes('END:VCALENDAR')) {
             handleEndRecord();
+        } else if (line.includes('BEGIN:VEVENT')) {
+            if (eventStarted) {
+                errors.push('Nested BEGIN:VEVENT found');
+            }
+            eventStarted = true;
+        } else if (line.includes('END:VEVENT')) {
+            if (!eventStarted) {
+                errors.push('END:VEVENT found without a corresponding BEGIN:VEVENT');
+            } else {
+                eventStarted = false;
+            }
         } else if (recordStarted) {
             processLine(line);
         }
@@ -89,6 +102,10 @@ async function processTextFile(filePath) {
 
     if (recordStarted) {
         errors.push('Last record not properly ended with END:VCALENDAR');
+    }
+
+    if (eventStarted) {
+        errors.push('Last event not properly ended with END:VEVENT');
     }
 
     if (errors.length > 0) {
@@ -118,8 +135,15 @@ async function processTextFile(filePath) {
     
 
     function processLine(line) {
-        const [key, value] = line.split(':').map(part => part.trim());
-        if (!key || !value) {
+        let [key, ...valueParts] = line.split(':');
+        key = key.trim();
+        let value = valueParts.join(':').trim();
+    
+        if (key.includes(';')) {
+            [key] = key.split(';'); 
+        }
+    
+        if (!key || value === undefined) {
             errors.push(`Invalid line format: ${line}`);
             return;
         }
@@ -130,6 +154,7 @@ async function processTextFile(filePath) {
                 errors.push(`Duplicate key found in record: ${key}`);
                 return;
             }
+    
             if (!validateKeyValue(lowerKey, value)) {
                 errors.push(`Invalid format for ${lowerKey}: ${value}`);
                 return;
@@ -140,11 +165,9 @@ async function processTextFile(filePath) {
             } else if (lowerKey === 'dtstart' || lowerKey === 'dtstamp') {
                 currentRecord[lowerKey] = dateCreator(value);
             } else if (lowerKey === 'attendee') {
-                // Initialize the attendees array if it doesn't exist
                 if (!currentRecord['attendees']) {
                     currentRecord['attendees'] = [];
                 }
-                // Add the attendee to the array
                 currentRecord['attendees'].push(value);
             } else {
                 currentRecord[lowerKey] = value;
@@ -162,8 +185,11 @@ async function processTextFile(filePath) {
             case 'status':
                 return statusIsValid(value);
             case 'attendee':
-                return attendeeIsValid(value.split(':')[1]); // Extract email or phone from the value
+                return attendeeIsValid(value.split(':')[1]); 
             case 'dtstart':
+                return dateCreator(value.replace('Z', '')) !== false;
+            case 'dtend':
+                return dateCreator(value.replace('Z', '')) !== false;
             case 'dtstamp':
                 return dateCreator(value.replace('Z', '')) !== false; // Remove 'Z' if present for UTC time
             default:
@@ -189,6 +215,8 @@ function validateKeyValue(key, value) {
             return dateCreator(value) !== false;  
         case 'dtstamp':
             return dateCreator(value) !== false;  
+        case 'dtend':
+            return dateCreator(value) !== false; 
         default:
             return true;
     }
