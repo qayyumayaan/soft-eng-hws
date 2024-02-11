@@ -185,22 +185,20 @@ describe('textProcessor Tests', () => {
         const filePath = './tests/valid_file.ical';
         const expectedLogs = [
             'Processed Record: {\n' +
-            '  "weight": "10",\n' +
-            '  "color": "red",\n' +
-            '  "time": "January 29, 2022 at 12:30 PM",\n' +
-            '  "identifier": "ID123",\n' +
-            '  "units": "kg"\n' +
-            '}',
-          'Processed Record: {\n' +
-            '  "weight": "15",\n' +
-            '  "color": "blue",\n' +
-            '  "time": "January 29, 2022 at 12:00 PM",\n' +
-            '  "identifier": "ID124",\n' +
-            '  "units": "kg"\n' +
+            '  "version": "2.0",\n' +
+            '  "isSchedulingRequest": true,\n' + 
+            '  "uid": "test-event-1234@example.com",\n' +
+            '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+            '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+            '  "status": "CONFIRMED",\n' +
+            '  "summary": "Test Event",\n' +
+            '  "attendees": [\n' + 
+            '    "mailto:test@example.com"\n' +
+            '  ]\n' +
             '}'
         ];
         const expectedErrors = [];
-    
+        
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
 });
