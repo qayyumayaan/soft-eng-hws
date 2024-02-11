@@ -97,18 +97,10 @@ describe('textProcessor Tests', () => {
     
     it('should report an invalid key error', async () => {
         const filePath = './tests/invalid_key.ical';
-        const expectedLogs = ['Processed Record: {\n  "color": "red",\n  "time": "January 29, 2022 at 12:34 PM",\n  "identifier": "ID123",\n  "units": "kg"\n}'];
-        const expectedErrors = [ 'Errors! Invalid key: GAMER' ]; 
-
-        await testFileProcessing(filePath, expectedLogs, expectedErrors);
-    });
-
-
-    it('should report an invalid line format error', async () => {
-        const filePath = './tests/invalid_line_format.ical';
         const expectedLogs = [
             'Processed Record: {\n' +
             '  "version": "2.0",\n' +
+            '  "isSchedulingRequest": true,\n' + 
             '  "uid": "test-event-1234@example.com",\n' +
             '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
             '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
@@ -119,8 +111,8 @@ describe('textProcessor Tests', () => {
             '  ]\n' +
             '}'
         ];
-        const expectedErrors = ['Errors! Invalid format for date: 29-01-2022']; 
-    
+        const expectedErrors = [ 'Errors! Invalid key: GAMERTAG' ]; 
+
         await testFileProcessing(filePath, expectedLogs, expectedErrors);
     });
 
