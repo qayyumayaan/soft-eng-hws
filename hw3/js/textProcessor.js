@@ -10,16 +10,6 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const PHONE_REGEX = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
 
 
-/*
-
-need to include: 
-ATTENDEE, (email or telephone) 
-DTSTART, (replace time) (done)
-DTSTAMP, (add another time object) (done)
-METHOD, (there is only METHOD:REQUEST) (done) 
-STATUS (replace color) (done)
-
-*/
 
 async function textProcessor(inputString) {
     if (!await fileIsValid(inputString)) {
@@ -29,32 +19,19 @@ async function textProcessor(inputString) {
 
     try {
         const text = await fs.promises.readFile(inputString, 'utf-8');
-        // console.log(text);
         const records = await processTextFile(inputString);
         if (records.length > 0) {
-            // const sortedRecords = sortRecords(records);
-            const sortedRecords = records;
+            const sortedRecords = sortRecords(records);
             await writeSortedRecordsToFile(sortedRecords, 'calendar-new.ical');
         }
     } catch (err) {
         console.error("Error processing file:", err.message);
+        return false;
     }
 }
 
 async function fileIsValid(inputString) {
-
-    const lowerCaseInput = inputString.toLowerCase();
-
-    let extensionIsValid = false
-    
-    for (let i = 0; i < VALID_FILE_EXTENSION.length; i++) {
-        const extension = VALID_FILE_EXTENSION[i];
-        if (lowerCaseInput.endsWith(extension.toLowerCase())) {
-            return true;
-        }
-    }
-
-    if (extensionIsValid == false) {
+    if (!VALID_FILE_EXTENSION.some(ext => inputString.toLowerCase().endsWith(ext))) {
         console.error(`Invalid file extension!`);
         return false;
     }
@@ -77,7 +54,7 @@ async function processTextFile(filePath) {
     let eventStarted = false; 
     let errors = [];
     let keysSet = new Set();
-    let records = []; // Array to store all valid records
+    let records = []; 
 
     for await (const line of rl) {
         if (line.includes('BEGIN:VCALENDAR')) {
@@ -162,7 +139,7 @@ async function processTextFile(filePath) {
     
             if (lowerKey === 'method' && value.toUpperCase() === 'REQUEST') {
                 currentRecord['isSchedulingRequest'] = true;
-            } else if (lowerKey === 'dtstart' || lowerKey === 'dtstamp') {
+            } else if (lowerKey === 'dtstart' || lowerKey === 'dtstamp' || lowerKey === 'last-modified') {
                 currentRecord[lowerKey] = dateCreator(value);
             } else if (lowerKey === 'attendee') {
                 if (!currentRecord['attendees']) {
@@ -178,49 +155,31 @@ async function processTextFile(filePath) {
             errors.push(`Invalid key: ${key}`);
         }
     }
-    
-    
+
     function validateKeyValue(key, value) {
         switch (key) {
+            case 'dtstart':
+                if (!value || dateCreator(value.replace('Z', '')) === false) {
+                    errors.push(`Invalid or missing dtstart value: ${value}`);
+                }
+                return true;
             case 'status':
                 return statusIsValid(value);
             case 'attendee':
-                return attendeeIsValid(value.split(':')[1]); 
-            case 'dtstart':
-                return dateCreator(value.replace('Z', '')) !== false;
+                return attendeeIsValid(value.split(':')[1]);
             case 'dtend':
-                return dateCreator(value.replace('Z', '')) !== false;
             case 'dtstamp':
-                return dateCreator(value.replace('Z', '')) !== false; // Remove 'Z' if present for UTC time
+            case 'last-modified': 
+                return dateCreator(value.replace('Z', '')) !== false; 
             default:
                 return true;
         }
     }
     
-    function attendeeIsValid(attendeeValue) {
-        return EMAIL_REGEX.test(attendeeValue) || PHONE_REGEX.test(attendeeValue);
-    }
-     
-    
+
     
 }
 
-function validateKeyValue(key, value) {
-    switch (key) {
-        case 'status':
-            return statusIsValid(value);
-        case 'attendee':
-            return attendeeIsValid(value);
-        case 'dtstart':
-            return dateCreator(value) !== false;  
-        case 'dtstamp':
-            return dateCreator(value) !== false;  
-        case 'dtend':
-            return dateCreator(value) !== false; 
-        default:
-            return true;
-    }
-}
 
 function statusIsValid(value) {
     return VALID_STATUSES.includes(value.toUpperCase());
