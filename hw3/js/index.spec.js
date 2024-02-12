@@ -209,6 +209,32 @@ describe('textProcessor Tests', () => {
     });
 
 
+    it('should process a file with optional items correctly', async () => {
+        const filePath = './tests/optional_tests.ical';
+        const expectedLogs = [
+            'Processed Record: {\n' +
+            '  "version": "2.0",\n' +
+            '  "isSchedulingRequest": true,\n' +
+            '  "uid": "test-event-1234@example.com",\n' +
+            '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+            '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+            '  "last-modified": "February 9, 2024 at 5:46 PM",\n' +
+            '  "name": "Barack Obama",\n' +
+            '  "organizer": "Barack Obama",\n' +
+            '  "status": "CONFIRMED",\n' +
+            '  "summary": "Test Event",\n' +
+            '  "attendees": [\n' + 
+            '    "mailto:test@example.com"\n' +
+            '  ]\n' +
+            '}'
+        ];
+        const expectedErrors = [];
+        
+        await testFileProcessing(filePath, expectedLogs, expectedErrors);
+    });
+    
+
+
 
     // it('should report an invalid weight format error', async () => {
     //     const filePath = './tests/invalid_weight.txt';
