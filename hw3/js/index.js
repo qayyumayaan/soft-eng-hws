@@ -11,22 +11,24 @@ function main() {
 
 function testMain() {
   
-  const files = [
-    './tests/duplicate_key.txt', 
-    './tests/empty_file.txt',
-    './tests/invalid_color.txt',
-    './tests/invalid_extension.jpg',
-    './tests/invalid_key.txt',
-    './tests/invalid_line_format.txt',
-    './tests/invalid_time.txt',
-    './tests/invalid_weight.txt',
-    './tests/missing_end_record.txt',
-    './tests/unsorted_records.txt',
-    './tests/valid_file.txt'
-  ]
+  // const files = [
+  //   './tests/duplicate_key.txt', 
+  //   './tests/empty_file.txt',
+  //   './tests/invalid_color.txt',
+  //   './tests/invalid_extension.jpg',
+  //   './tests/invalid_key.txt',
+  //   './tests/invalid_line_format.txt',
+  //   './tests/invalid_time.txt',
+  //   './tests/invalid_weight.txt',
+  //   './tests/missing_end_record.txt',
+  //   './tests/unsorted_records.txt',
+  //   './tests/valid_file.txt'
+  // ]
 
   
-  const filePath =     './tests/invalid_key.txt'
+  // const filePath =     './calendar.ical'
+  const filePath =     './tests/optional_tests.ical'
+
 
   const output = textProcessor(filePath);
   console.log(output)
