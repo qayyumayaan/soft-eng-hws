@@ -1,184 +1,217 @@
-(base) qayyuma@nbp-63-247 hw2 % npm test
-
-> hw2@1.0.0 test
-> ./node_modules/jasmine/bin/jasmine.js
-
-Randomized with seed 15427
+(base) qayyuma@nbp-2-142 hw3 % npx jasmine
+Randomized with seed 27646
 Started
-Console Output: []
-Console Error Output: []
-.Captured: Processed Record: {
-  "weight": "10",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID123",
-  "units": "kg"
+Captured: Processed Record: {
+  "version": "2.0",
+  "isSchedulingRequest": true,
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 10, 2024 at 5:46 PM",
+  "dtstart": "February 9, 2024 at 5:46 PM",
+  "status": "CONFIRMED",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:test@example.com"
+  ]
 }
-Captured: Errors! Invalid format for color: orangatan
+Captured: Errors! Invalid key: GAMERTAG
 Console Output: [
   'Processed Record: {\n' +
-    '  "weight": "10",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
+    '  "version": "2.0",\n' +
+    '  "isSchedulingRequest": true,\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+    '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+    '  "status": "CONFIRMED",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:test@example.com"\n' +
+    '  ]\n' +
     '}'
 ]
-Console Error Output: [ 'Errors! Invalid format for color: orangatan' ]
+Console Error Output: [ 'Errors! Invalid key: GAMERTAG' ]
+.Captured: Processed Record: {
+  "version": "2.0",
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 10, 2024 at 5:46 PM",
+  "dtstart": "February 9, 2024 at 5:46 PM",
+  "status": "CONFIRMED",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:test@example.com"
+  ]
+}
+Captured: Errors! Invalid key: METHODREQUEST
+Console Output: [
+  'Processed Record: {\n' +
+    '  "version": "2.0",\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+    '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+    '  "status": "CONFIRMED",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:test@example.com"\n' +
+    '  ]\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid key: METHODREQUEST' ]
+.Captured: Processed Record: {
+  "version": "2.0",
+  "isSchedulingRequest": true,
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 10, 2024 at 5:46 PM",
+  "dtstart": "February 9, 2024 at 5:46 PM",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:test@example.com"
+  ]
+}
+Captured: Errors! Invalid format for status: Unsure
+Console Output: [
+  'Processed Record: {\n' +
+    '  "version": "2.0",\n' +
+    '  "isSchedulingRequest": true,\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+    '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:test@example.com"\n' +
+    '  ]\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Invalid format for status: Unsure' ]
+.Captured: Invalid file extension!
+Captured: File validation failed!
+Console Output: []
+Console Error Output: [ 'Invalid file extension!', 'File validation failed!' ]
 .Captured: Invalid file extension!
 Captured: File validation failed!
 Console Output: []
 Console Error Output: [ 'Invalid file extension!', 'File validation failed!' ]
 .Captured: Processed Record: {
-  "color": "red",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID123",
-  "units": "kg"
-}
-Captured: Errors! Invalid key: height,Invalid key: size
-Console Output: [
-  'Processed Record: {\n' +
-    '  "color": "red",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
-    '}'
-]
-Console Error Output: [ 'Errors! Invalid key: height,Invalid key: size' ]
-.Captured: Processed Record: {
-  "color": "red",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID123",
-  "units": "kg"
-}
-Captured: Errors! Invalid format for weight: -10
-Console Output: [
-  'Processed Record: {\n' +
-    '  "color": "red",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
-    '}'
-]
-Console Error Output: [ 'Errors! Invalid format for weight: -10' ]
-.Captured: Processed Record: {
-  "weight": "15",
-  "color": "blue",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID124",
-  "units": "kg"
-}
-Captured: Processed Record: {
-  "weight": "10",
-  "color": "red",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID123",
-  "units": "kg"
+  "version": "2.0",
+  "isSchedulingRequest": true,
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 10, 2024 at 5:46 PM",
+  "dtstart": "February 9, 2024 at 5:46 PM",
+  "status": "CONFIRMED",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:test@example.com"
+  ]
 }
 Console Output: [
   'Processed Record: {\n' +
-    '  "weight": "15",\n' +
-    '  "color": "blue",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID124",\n' +
-    '  "units": "kg"\n' +
-    '}',
-  'Processed Record: {\n' +
-    '  "weight": "10",\n' +
-    '  "color": "red",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
+    '  "version": "2.0",\n' +
+    '  "isSchedulingRequest": true,\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+    '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+    '  "status": "CONFIRMED",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:test@example.com"\n' +
+    '  ]\n' +
     '}'
 ]
 Console Error Output: []
 .Captured: Processed Record: {
-  "weight": "10",
-  "color": "red",
-  "time": false,
-  "identifier": "ID123",
-  "units": "kg"
-}
-Captured: Errors! Invalid format for time: 29-01-2022
-Console Output: [
-  'Processed Record: {\n' +
-    '  "weight": "10",\n' +
-    '  "color": "red",\n' +
-    '  "time": false,\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
-    '}'
-]
-Console Error Output: [ 'Errors! Invalid format for time: 29-01-2022' ]
-.Captured: Processed Record: {
-  "weight": "10",
-  "color": "red",
-  "time": "January 29, 2022 at 12:30 PM",
-  "identifier": "ID123",
-  "units": "kg"
-}
-Captured: Processed Record: {
-  "weight": "15",
-  "color": "blue",
-  "time": "January 29, 2022 at 12:00 PM",
-  "identifier": "ID124",
-  "units": "kg"
+  "version": "2.0",
+  "isSchedulingRequest": true,
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 9, 2024 at 5:48 PM",
+  "dtstart": true,
+  "status": "CONFIRMED",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:jrumxmip@example.com"
+  ]
 }
 Console Output: [
   'Processed Record: {\n' +
-    '  "weight": "10",\n' +
-    '  "color": "red",\n' +
-    '  "time": "January 29, 2022 at 12:30 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
-    '}',
-  'Processed Record: {\n' +
-    '  "weight": "15",\n' +
-    '  "color": "blue",\n' +
-    '  "time": "January 29, 2022 at 12:00 PM",\n' +
-    '  "identifier": "ID124",\n' +
-    '  "units": "kg"\n' +
+    '  "version": "2.0",\n' +
+    '  "isSchedulingRequest": true,\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 9, 2024 at 5:48 PM",\n' +
+    '  "dtstart": true,\n' +
+    '  "status": "CONFIRMED",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:jrumxmip@example.com"\n' +
+    '  ]\n' +
     '}'
 ]
 Console Error Output: []
-.Captured: Processed Record: {
-  "weight": "10",
-  "color": "red",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID123",
-  "units": "kg"
-}
-Captured: Errors! Duplicate key found in record: weight
-Console Output: [
-  'Processed Record: {\n' +
-    '  "weight": "10",\n' +
-    '  "color": "red",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
-    '}'
-]
-Console Error Output: [ 'Errors! Duplicate key found in record: weight' ]
-.Captured: Errors! Last record not properly ended with END:RECORD
+.Captured: Errors! Last record not properly ended with END:VCALENDAR
 Console Output: []
-Console Error Output: [ 'Errors! Last record not properly ended with END:RECORD' ]
+Console Error Output: [ 'Errors! Last record not properly ended with END:VCALENDAR' ]
 .Captured: Processed Record: {
-  "color": "red",
-  "time": "January 29, 2022 at 12:34 PM",
-  "identifier": "ID123",
-  "units": "kg"
+  "version": "2.0",
+  "isSchedulingRequest": true,
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 10, 2024 at 5:46 PM",
+  "dtstart": "February 9, 2024 at 5:46 PM",
+  "last-modified": "February 9, 2024 at 5:46 PM",
+  "name": "Barack Obama",
+  "organizer": "Barack Obama",
+  "status": "CONFIRMED",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:test@example.com"
+  ]
 }
-Captured: Errors! Invalid line format: weight-10
 Console Output: [
   'Processed Record: {\n' +
-    '  "color": "red",\n' +
-    '  "time": "January 29, 2022 at 12:34 PM",\n' +
-    '  "identifier": "ID123",\n' +
-    '  "units": "kg"\n' +
+    '  "version": "2.0",\n' +
+    '  "isSchedulingRequest": true,\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+    '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+    '  "last-modified": "February 9, 2024 at 5:46 PM",\n' +
+    '  "name": "Barack Obama",\n' +
+    '  "organizer": "Barack Obama",\n' +
+    '  "status": "CONFIRMED",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:test@example.com"\n' +
+    '  ]\n' +
     '}'
 ]
-Console Error Output: [ 'Errors! Invalid line format: weight-10' ]
+Console Error Output: []
+.Captured: Processed Record: {
+  "version": "2.0",
+  "isSchedulingRequest": true,
+  "uid": "test-event-1234@example.com",
+  "dtstamp": "February 10, 2024 at 5:46 PM",
+  "dtstart": "February 9, 2024 at 5:46 PM",
+  "status": "CONFIRMED",
+  "summary": "Test Event",
+  "attendees": [
+    "mailto:test@example.com"
+  ]
+}
+Captured: Errors! Duplicate key found in record: DTSTAMP
+Console Output: [
+  'Processed Record: {\n' +
+    '  "version": "2.0",\n' +
+    '  "isSchedulingRequest": true,\n' +
+    '  "uid": "test-event-1234@example.com",\n' +
+    '  "dtstamp": "February 10, 2024 at 5:46 PM",\n' +
+    '  "dtstart": "February 9, 2024 at 5:46 PM",\n' +
+    '  "status": "CONFIRMED",\n' +
+    '  "summary": "Test Event",\n' +
+    '  "attendees": [\n' +
+    '    "mailto:test@example.com"\n' +
+    '  ]\n' +
+    '}'
+]
+Console Error Output: [ 'Errors! Duplicate key found in record: DTSTAMP' ]
+.Console Output: []
+Console Error Output: []
 .
 
 
 11 specs, 0 failures
-Finished in 0.051 seconds
-Randomized with seed 15427 (jasmine --random=true --seed=15427)
+Finished in 0.03 seconds
+Randomized with seed 27646 (jasmine --random=true --seed=27646)
