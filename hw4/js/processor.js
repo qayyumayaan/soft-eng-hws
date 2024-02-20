@@ -4,8 +4,7 @@ const { crc32 } = require('crc');
 
 
 
-
-// const nodeIcal = require('node-ical');
+const HOLIDAYS = ['20240219', '20240321', '20240527', '20240704', '20240902', '20241128', '20241225'];
 
 const CALENDAR_FILE = 'master_schedule.txt';
 
@@ -74,6 +73,8 @@ function MakeReservation(attendee, dtstart, dtstamp, method, status) {
     if (!dateIsValid(String(dtstamp))) errorMessages.push(`${dtstamp} is not a valid date!`);
     if (!dateIsValid(String(dtstart))) errorMessages.push(`${dtstart} is not a valid date!`);
     if (!statusIsValid(String(status))) errorMessages.push(`${status} is not a valid status!`);
+    if (!invalidOrConflictingDates(String(dtstart))) errorMessages.push(`${dtstart} is in conflict!`);
+
 
     if (errorMessages.length > 0) {
         console.log(errorMessages.join('\n'));
@@ -181,6 +182,50 @@ function statusIsValid(status) {
     const validStatuses = ['TENTATIVE', 'CONFIRMED', 'CANCELLED'];
     return validStatuses.includes(status.toUpperCase());
 }
+
+
+
+
+
+
+
+
+
+function isWeekendOrHoliday(date) {
+    const year = date.slice(0, 4);
+    const month = date.slice(4, 6) - 1; 
+    const day = date.slice(6, 8);
+    const formattedDate = new Date(year, month, day);
+    
+    const dayOfWeek = formattedDate.getDay(); 
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    const formattedDateString = date.slice(0, 4) + '-' + date.slice(4, 6) + '-' + date.slice(6, 8);
+    const isHoliday = HOLIDAYS.includes(formattedDateString);
+
+    return isWeekend || isHoliday;
+}
+
+
+
+function invalidOrConflictingDates(date) {
+    const schedule = readCalendar();
+    const existingDates = schedule.split('\n').map(entry => entry.split(',')[3].slice(0, 8)); 
+
+    console.log(existingDates)
+
+    if (existingDates.includes(date.slice(0, 8))) {
+        return false;
+    }
+
+    if (isWeekendOrHoliday(date)) {
+        console.log('Date is on a weekend or holiday.');
+        return false;
+    }
+
+    return true;
+}
+
 
 
 module.exports = {

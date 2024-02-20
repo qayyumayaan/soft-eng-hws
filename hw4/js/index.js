@@ -12,7 +12,7 @@ function runtime() {
 }
 
 function askQuestion(rl) {
-  rl.question('What would you like to do?\n1. Make a reservation\n2. Lookup a reservation\n3. Cancel a reservation\n4. Find the next few available dates\nEnter option number or QUIT to exit: \n', (option) => {
+  rl.question('What would you like to do?\n1. Make a reservation\n2. Lookup a reservation (patientID)\n3. Cancel a reservation (confirmationCode)\n4. Find the next few available dates\nEnter option number or QUIT to exit: \n', (option) => {
     if (option === '1') {
       makeReservation(rl);
     } else if (option === '2') {
@@ -62,7 +62,7 @@ function cancelReservation(rl) {
 
 function findAvailableDates(rl) {
   // Find available dates logic here
-  
+
   console.log('Next few available dates:');
   // Display available dates
   askQuestion(rl);
