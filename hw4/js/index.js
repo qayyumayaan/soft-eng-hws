@@ -55,17 +55,15 @@ function lookupReservation(rl) {
 function cancelReservation(rl) {
   rl.question('Please provide your confirmation code: ', (confirmationCode) => {
     CancelReservation(confirmationCode)
-    // console.log(`Reservation with confirmation code ${confirmationCode} cancelled successfully.`);
     askQuestion(rl);
   });
 }
 
 function findAvailableDates(rl) {
-  // Find available dates logic here
-
-  console.log('Next few available dates:');
-  // Display available dates
-  askQuestion(rl);
+  rl.question('Please type how many available dates you will like to see (between 1 and 4): ', (numberOfDates) => {
+    FindAvailableDates(numberOfDates)
+    askQuestion(rl);
+  });
 }
 
 

@@ -46,13 +46,8 @@ function writeToMaster(data) {
 
 function initiateMasterSchedule() {
     try {
-        // Check if the file exists
         if (fs.existsSync(CALENDAR_FILE)) {
-            // Read and parse the existing schedule
-            // const schedule = fs.readFileSync(CALENDAR_FILE, 'utf-8');
-            // console.log('Existing schedule:', schedule);
         } else {
-            // If the file doesn't exist, create an empty one
             fs.writeFileSync(CALENDAR_FILE, '', 'utf-8');
             console.log('Master schedule initiated.');
         }
@@ -61,9 +56,28 @@ function initiateMasterSchedule() {
     }
 }
 
-function FindAvailableDates(startDate, endDate, numberOfDates) {
-    // Find available dates
+function FindAvailableDates(numberOfDates) {
+    const availableDates = [];
+    let currentDate = new Date(); 
+    let foundDates = 0;
+
+    while (foundDates < numberOfDates) {
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}${month}${day}`;
+
+        if (invalidOrConflictingDates(formattedDate)) {
+            availableDates.push(formattedDate);
+            foundDates++;
+        }
+
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    console.log(`The next ${numberOfDates} available dates are: ${availableDates}`);
 }
+
 
 function MakeReservation(attendee, dtstart, dtstamp, method, status) {
     initiateMasterSchedule();
@@ -184,11 +198,6 @@ function statusIsValid(status) {
 
 
 
-
-
-
-
-
 function isWeekendOrHoliday(date) {
     const year = date.slice(0, 4);
     const month = date.slice(4, 6) - 1; 
@@ -210,7 +219,7 @@ function invalidOrConflictingDates(date) {
     const schedule = readCalendar();
     const existingDates = schedule.split('\n').map(entry => entry.split(',')[3].slice(0, 8)); 
 
-    console.log(existingDates)
+    // console.log(existingDates)
 
     if (existingDates.includes(date.slice(0, 8))) {
         return false;
