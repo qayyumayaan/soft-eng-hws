@@ -10,3 +10,7 @@ To run jasmine tests, please run:
 npm test
 
 Please review console_output.txt for the Jasmine console output. 
+
+The format of the master_schedule.txt is: 
+
+patientID,confirmationCode,ATTENDEE,DTSTART,DTSTAMP,METHOD,STATUS
