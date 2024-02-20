@@ -118,11 +118,9 @@ function LookupReservations(patientID) {
     
     let found = false;
     for (const reservation of reservations) {
-        const [hash, data] = reservation.split(',');
+        const [hash, confirmationCode, attendee, dtstart, dtstamp, method, status] = reservation.split(',');
         if (hash === patientID) {
-            console.log(`Reservation found: ${data}`);
-
-            
+            console.log(`Reservation found: \nAttendee: ${attendee} \nDateStart:${dtstart} \nDateStamp:${dtstamp} \nMethod:${method} \nStatus:${status}`);
 
             found = true;
             break;
