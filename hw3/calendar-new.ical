@@ -1,0 +1,14 @@
+[
+  {
+    "version": "2.0",
+    "isSchedulingRequest": true,
+    "uid": "test-event-1234@example.com",
+    "dtstamp": "February 10, 2024 at 5:46 PM",
+    "dtstart": "February 9, 2024 at 5:46 PM",
+    "status": "CONFIRMED",
+    "summary": "Test Event",
+    "attendees": [
+      "mailto:test@example.com"
+    ]
+  }
+]
