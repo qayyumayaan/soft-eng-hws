@@ -1,0 +1,36 @@
+(base) qayyuma@nbp-5-47 soft-eng-hw % npm test
+
+> soft-eng-hw@1.0.0 test
+> ./node_modules/jasmine/bin/jasmine.js
+
+Randomized with seed 91742
+Started
+.......................Year is not valid!
+Year is not valid!
+Year is not valid!
+Year is not valid!
+..Minute is not valid!
+Minute is not valid!
+Minute is not valid!
+.Hour is not valid!
+Hour is not valid!
+Hour is not valid!
+.Second is not valid!
+Second is not valid!
+Second is not valid!
+.Day is not valid!
+Day is not valid!
+Day is not valid!
+.Month is not valid!
+Month is not valid!
+Month is not valid!
+.....January 29, 2022 at 12:34 PM
+.Improper format!
+Improper format!
+Month is not valid!
+.
+
+
+36 specs, 0 failures
+Finished in 0.046 seconds
+Randomized with seed 91742 (jasmine --random=true --seed=91742)
