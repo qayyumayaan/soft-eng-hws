@@ -44,4 +44,34 @@ describe('Server Tests', () => {
     expect(response.text).toBe('Method Not Allowed');
     expect(response.headers['content-type']).toMatch('text/plain');
   });
+
+  it('should handle POST request with supported Content-Type (text/plain)', async () => {
+    const data = 'Test data';
+    const response = await request(server)
+      .post('/')
+      .set('Content-Type', 'text/plain')
+      .send(data);
+    expect(response.status).toBe(200);
+    expect(response.text).toBe(data);
+    expect(response.headers['content-type']).toMatch('text/plain');
+  });
+
+  it('should handle POST request with supported Content-Type (application/xml)', async () => {
+    const data = '<message>Test data</message>';
+    const response = await request(server)
+      .post('/')
+      .set('Content-Type', 'application/xml')
+      .send(data);
+    expect(response.status).toBe(200);
+    expect(response.text).toBe(data);
+    expect(response.headers['content-type']).toMatch('application/xml');
+  });
+  
+  it('should handle GET request to a specific endpoint', async () => {
+    const response = await request(server).get('/test');
+    expect(response.status).toBe(405); 
+    expect(response.text).toBe('Method Not Allowed'); 
+    expect(response.headers['content-type']).toMatch('text/plain');
+  });
+  
 });
