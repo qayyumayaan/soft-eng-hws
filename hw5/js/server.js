@@ -13,8 +13,20 @@ const server = http.createServer((req, res) => {
       
       // Check if Content-Type is supported
       if (['application/json', 'text/plain', 'application/xml'].includes(contentType)) {
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(body); 
+        if (contentType === 'application/json') {
+          try {
+            JSON.parse(body); 
+            // Attempt to parse JSON
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(body); 
+          } catch (error) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' }); 
+            res.end('Bad Request - Malformed Body');
+          }
+        } else {
+          res.writeHead(200, { 'Content-Type': contentType });
+          res.end(body);
+        }
       } else {
         // Respond with a 415 Unsupported Media Type status code
         res.writeHead(415, { 'Content-Type': 'text/plain' });
