@@ -1,0 +1,10 @@
+(base) qayyuma@Ayaans-MacBook-Pro hw5 % npx jasmine
+Randomized with seed 95473
+Started
+Server running on port 3000
+.......
+
+
+7 specs, 0 failures
+Finished in 0.018 seconds
+Randomized with seed 95473 (jasmine --random=true --seed=95473)
