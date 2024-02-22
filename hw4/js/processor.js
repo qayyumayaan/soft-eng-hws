@@ -60,6 +60,16 @@ function initiateMasterSchedule() {
 function FindAvailableDates(numberOfDates) {
     const availableDates = [];
     let currentDate = new Date(); 
+
+    if (!isValidShortDate(startDate)) {
+        console.error('Invalid start date format. Please use YYYYMMDD format.');
+        return;
+    }
+
+    if (!isValidShortDate(endDate)) {
+        console.error('Invalid end date format. Please use YYYYMMDD format.');
+        return;
+    }
     let foundDates = 0;
 
     while (foundDates < numberOfDates) {
