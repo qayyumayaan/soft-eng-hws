@@ -80,6 +80,32 @@ function FindAvailableDates(numberOfDates) {
     return availableDates
 }
 
+function isValidShortDate(dateString) {
+    if (typeof dateString !== 'string' || dateString.length !== 8) {
+        return false; // Date string must be in YYYYMMDD format
+    }
+
+    const year = parseInt(dateString.substring(0, 4));
+    const month = parseInt(dateString.substring(4, 6)) - 1; // Month is zero-based
+    const day = parseInt(dateString.substring(6, 8));
+
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        return false; // Invalid components
+    }
+
+    const date = new Date(year, month, day);
+
+    return (
+        date.getFullYear() === year &&
+        date.getMonth() === month &&
+        date.getDate() === day
+    );
+}
+
+
+
+  
+
 
 function MakeReservation(attendee, dtstart, dtstamp, method, status) {
     initiateMasterSchedule();
