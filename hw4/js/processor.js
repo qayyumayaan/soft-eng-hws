@@ -57,9 +57,9 @@ function initiateMasterSchedule() {
     }
 }
 
-function FindAvailableDates(numberOfDates) {
+function FindAvailableDates(startDate, endDate, numberOfDates) {
     const availableDates = [];
-    let currentDate = new Date(); 
+    let currentDate = startDate; 
 
     if (!isValidShortDate(startDate)) {
         console.error('Invalid start date format. Please use YYYYMMDD format.');
@@ -73,21 +73,26 @@ function FindAvailableDates(numberOfDates) {
     let foundDates = 0;
 
     while (foundDates < numberOfDates) {
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
-        const day = String(currentDate.getDate()).padStart(2, '0');
+        if (currentDate > endDate) {
+            break;
+        }
+
+        const year = currentDate.substring(0, 4);
+        const month = currentDate.substring(4, 6);
+        const day = currentDate.substring(6, 8);
+
         const formattedDate = `${year}${month}${day}`;
 
-        if (invalidOrConflictingDates(formattedDate)) {
+        if (!invalidOrConflictingDates(formattedDate)) {
             availableDates.push(formattedDate);
             foundDates++;
         }
 
-        currentDate.setDate(currentDate.getDate() + 1);
+        currentDate = incrementDateByOne(currentDate);
     }
 
     console.log(`The next ${numberOfDates} available dates are: ${availableDates.join(', ')}`);
-    return availableDates
+    return availableDates;
 }
 
 function isValidShortDate(dateString) {
@@ -113,8 +118,31 @@ function isValidShortDate(dateString) {
 }
 
 
+function incrementDateByOne(dateString) {
+    let year = parseInt(dateString.substring(0, 4));
+    let month = parseInt(dateString.substring(4, 6));
+    let day = parseInt(dateString.substring(6, 8));
 
+    // Increment the day
+    day += 1;
+
+    // Handle month and year rollover
+    if (day > getDaysInMonth(year, month)) {
+        day = 1;
+        month += 1;
+        if (month > 12) {
+            month = 1;
+            year += 1;
+        }
+    }
+
+    // Format the incremented date
+    return `${year}${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+}
   
+function getDaysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+}
 
 
 function MakeReservation(attendee, dtstart, dtstamp, method, status) {
@@ -270,7 +298,7 @@ function invalidOrConflictingDates(date) {
     }
 
     if (isWeekendOrHoliday(date)) {
-        console.log('Date is on a weekend or holiday.');
+        // console.log('Date is on a weekend or holiday.');
         return false;
     }
 
