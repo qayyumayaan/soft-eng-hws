@@ -9,21 +9,14 @@ const HOLIDAYS = ['20240219', '20240321', '20240527', '20240704', '20240902', '2
 const CALENDAR_FILE = 'master_schedule.txt';
 
 function readCalendar() {
-    try {
-        if (fs.existsSync(CALENDAR_FILE)) {
-            const schedule = fs.readFileSync(CALENDAR_FILE, 'utf-8');
-            const sortedSchedule = sortSchedule(schedule);
-            return sortedSchedule;
-        } else {
-            fs.writeFileSync(CALENDAR_FILE, '', 'utf-8');
-            console.log('Master schedule initiated.');
-            return '';
-        }
-    } catch (error) {
-        console.error('Error reading calendar:', error);
-        return '';
-    }
+    return new Promise((resolve, reject) => {
+        dataBase.query('SELECT * FROM Users ORDER BY DTSTART ASC', (error, results) => {
+            if (error) reject(error);
+            else resolve(results);
+        });
+    });
 }
+
 
 function sortSchedule(schedule) {
     if (schedule == null) return false
@@ -36,13 +29,13 @@ function sortSchedule(schedule) {
     return sortedReservations.join('\n');
 }
 
-function writeToMaster(data) {
-    try {
-        fs.appendFileSync(CALENDAR_FILE, data + '\n', 'utf-8');
-        console.log('Reservation added to master schedule.');
-    } catch (error) {
-        console.error('Error writing to master schedule:', error);
-    }
+function addToDatabase(newRecord) {
+    return new Promise((resolve, reject) => {
+        dataBase.query('INSERT INTO Users SET ?', newRecord, (error, results) => {
+            if (error) reject(error);
+            else resolve(results);
+        });
+    });
 }
 
 function initiateMasterSchedule() {
@@ -145,46 +138,53 @@ function getDaysInMonth(year, month) {
 }
 
 
-function MakeReservation(attendee, dtstart, dtstamp, method, status) {
-    initiateMasterSchedule();
-
+async function MakeReservation(attendee, dtstart, dtstamp, method, status) {
+    // First, validate the inputs
     let errorMessages = [];
-    if (!methodIsValid(String(method))) errorMessages.push(`${method} is not a valid method!`);
-    if (!dateIsValid(String(dtstamp))) errorMessages.push(`${dtstamp} is not a valid date!`);
-    if (!dateIsValid(String(dtstart))) errorMessages.push(`${dtstart} is not a valid date!`);
-    if (!statusIsValid(String(status))) errorMessages.push(`${status} is not a valid status!`);
-    if (!invalidOrConflictingDates(String(dtstart))) errorMessages.push(`${dtstart} is in conflict!`);
-
+    if (!methodIsValid(method)) errorMessages.push(`${method} is not a valid method!`);
+    if (!dateIsValid(dtstamp)) errorMessages.push(`${dtstamp} is not a valid date!`);
+    if (!dateIsValid(dtstart)) errorMessages.push(`${dtstart} is not a valid date!`);
+    if (!statusIsValid(status)) errorMessages.push(`${status} is not a valid status!`);
+    // Assume we have a function to check if the date is available or not
+    const isDateAvailable = await checkDateAvailability(dtstart);
+    if (!isDateAvailable) errorMessages.push(`${dtstart} is in conflict!`);
 
     if (errorMessages.length > 0) {
-        console.log(errorMessages.join('\n'));
-        return false;
+        console.error(errorMessages.join('\n'));
+        return false; // Stop execution if there are errors
     }
 
-    const reservationData = `${attendee},${dtstart},${dtstamp},${method},${status}`;
-    const patientID = hashReservation(reservationData); 
-    const confirmationCode = hashReservation(`${reservationData},${new Date().getTime()}`); 
+    // If validation passes, prepare the data for insertion
+    const newRecord = {
+        ATTENDEE: attendee,
+        DTSTART: dtstart,
+        METHOD: method,
+        STATUS: status,
+        DTSTAMP: dtstamp // Assuming you have a column for this in your table
+    };
 
-    const schedule = readCalendar();
-    const existingEntries = schedule ? schedule.split('\n').map(entry => entry.split(',')[2]) : [];
-    const newDate = dtstart.split('T')[0];
-
-    // Check if there's an existing reservation on the same day
-    const isDateTaken = existingEntries.some(entry => entry.split(',')[3])
-
-    if (isDateTaken) {
-        console.log('An event already exists on this day. Only one event per day is allowed.');
-        return false;
+    // Insert the data into the database
+    try {
+        await insertIntoDatabase(newRecord);
+        console.log('Reservation made successfully');
+        return true; // Indicate success
+    } catch (error) {
+        console.error('Database operation failed:', error);
+        return false; // Indicate failure
     }
-
-    const reservationEntry = `${patientID},${confirmationCode},${reservationData}`;
-    console.log(`Your patientID is ${patientID}. Your confirmation code is ${confirmationCode}.`);
-    writeToMaster(reservationEntry);
-
-    return true;
 }
 
+async function checkDateAvailability(dtstart) {
+    const query = 'SELECT COUNT(*) AS count FROM Users WHERE DTSTART = ?';
+    const [results] = await dataBase.promise().query(query, [dtstart]);
+    return results[0].count === 0; // Returns true if date is available
+}
 
+// Helper function to insert a new record into the database
+async function insertIntoDatabase(newRecord) {
+    const query = 'INSERT INTO Users (ATTENDEE, DTSTART, METHOD, STATUS, DTSTAMP) VALUES (?, ?, ?, ?, ?)';
+    await dataBase.promise().query(query, [newRecord.ATTENDEE, newRecord.DTSTART, newRecord.METHOD, newRecord.STATUS, newRecord.DTSTAMP]);
+}
 
 
 
