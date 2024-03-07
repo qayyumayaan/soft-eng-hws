@@ -1,21 +1,25 @@
-(base) qayyuma@nbp-134-89 hw4 % npx jasmine
-Randomized with seed 35529
+(base) qayyuma@nbp-199-152 hw4 % npm test
+
+> hw4@1.0.0 test
+> ./node_modules/jasmine/bin/jasmine.js
+
+Randomized with seed 25455
 Started
-2024-02-19T12:34:56 is not a valid date!
+INVALID_METHOD is not a valid method!
+..Master schedule initiated.
+.2024-02-19T12:34:56 is not a valid date!
 2024-02-20 is not a valid date!
-..INVALID_METHOD is not a valid method!
-.Master schedule initiated.
-...Your patientID is 13c3e284. Your confirmation code is f55aa00f.
-Reservation added to master schedule.
-..The next 4 available dates are: 20240219, 20240220, 20240221, 20240222
-..Your patientID is 64dd1917. Your confirmation code is 3322d469.
+....No reservation found with the provided confirmation code.
+.Your patientID is 64dd1917. Your confirmation code is c481027d.
 Reservation added to master schedule.
 No reservation found with the provided confirmation code.
 No reservations found.
-...No reservation found with the provided confirmation code.
-.
+.The next 4 available dates are: 20240106, 20240107, 20240113, 20240114
+..Your patientID is 13c3e284. Your confirmation code is 1539cf68.
+Reservation added to master schedule.
+...
 
 
 14 specs, 0 failures
-Finished in 0.03 seconds
-Randomized with seed 35529 (jasmine --random=true --seed=35529)
+Finished in 0.019 seconds
+Randomized with seed 25455 (jasmine --random=true --seed=25455)

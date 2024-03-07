@@ -60,39 +60,15 @@ function cancelReservation(rl) {
 }
 
 function findAvailableDates(rl) {
-  rl.question('Please type how many available dates you will like to see (between 1 and 4): ', (numberOfDates) => {
-    FindAvailableDates(numberOfDates)
-    askQuestion(rl);
+  rl.question('Start date (YYYYMMDD): ', (startDate) => {
+    rl.question('End date (YYYYMMDD): ', (endDate) => {
+      rl.question('How many available dates do you want to see? (1 <= N <= 4): ', (numberOfDates) => {
+        FindAvailableDates(startDate, endDate, numberOfDates)
+        askQuestion(rl);
+      });
+    });
   });
 }
 
 
-
-function testRuntime() {
-  
-  // const files = [
-  //   './tests/duplicate_key.txt', 
-  //   './tests/empty_file.txt',
-  //   './tests/invalid_color.txt',
-  //   './tests/invalid_extension.jpg',
-  //   './tests/invalid_key.txt',
-  //   './tests/invalid_line_format.txt',
-  //   './tests/invalid_time.txt',
-  //   './tests/invalid_weight.txt',
-  //   './tests/missing_end_record.txt',
-  //   './tests/unsorted_records.txt',
-  //   './tests/valid_file.txt'
-  // ]
-
-  
-  // const filePath =     './calendar.ical'
-  const filePath =     './tests/optional_tests.ical'
-
-
-  const output = main(filePath);
-  console.log(output)
-
-}
-
-// testRuntime()
 runtime()

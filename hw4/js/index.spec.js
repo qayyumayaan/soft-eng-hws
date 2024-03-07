@@ -2,6 +2,13 @@ const fs = require('fs');
 const { FindAvailableDates, MakeReservation, LookupReservations, CancelReservation, readCalendar, initiateMasterSchedule, dateIsValid, methodIsValid, sortSchedule } = require('./processor.js');
 
 describe("Calendar System Tests", () => {
+    describe("Find Available Dates", () => {
+        it("should find a specified number of available dates", () => {
+            const availableDates = FindAvailableDates('20240101', '20240501', 4);
+            expect(availableDates).toEqual(['20240106', '20240107', '20240113', '20240114'])
+        });
+    });   
+
     describe("Initialization", () => {
         it("should create a new file if it does not exist", () => {
             spyOn(fs, 'existsSync').and.returnValue(false);
@@ -90,14 +97,7 @@ describe("Calendar System Tests", () => {
             const isValid = dateIsValid('20240220T123456');
             expect(isValid).toBeTrue();
         });
-    });
-
-    describe("Find Available Dates", () => {
-        it("should find a specified number of available dates", () => {
-            const availableDates = FindAvailableDates(4);
-            expect(availableDates).toEqual(['20240219', '20240220', '20240221', '20240222'])
-        });
-    });    
+    }); 
 
     describe("Method Validation", () => {
         it("should recognize a valid method", () => {
