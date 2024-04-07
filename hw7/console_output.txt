@@ -1,0 +1,24 @@
+(base) qayyuma@Ayaans-MacBook-Pro hw7 % jasmine js/index.spec.js
+Randomized with seed 88096
+Started
+The next 4 available dates are: 20240106, 20240107, 20240113, 20240114
+.Your patientID is 64dd1917. Your confirmation code is f201dab8.
+Reservation added to master schedule.
+Notification sent.
+No reservation found with the provided confirmation code.
+No reservations found.
+.......Your patientID is 13c3e284. Your confirmation code is a3ab7756.
+Reservation added to master schedule.
+Notification sent.
+.Master schedule initiated.
+.....2024-02-19T12:34:56 is not a valid date!
+2024-02-20 is not a valid date!
+.No reservation found with the provided confirmation code.
+.INVALID_METHOD is not a valid method!
+....
+
+
+20 specs, 0 failures
+Finished in 0.044 seconds
+Randomized with seed 88096 (jasmine --random=true --seed=88096)
+(base) qayyuma@Ayaans-MacBook-Pro hw7 % 
