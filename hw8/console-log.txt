@@ -1,36 +1,11 @@
-(base) qayyuma@nbp-134-227 hw6 % npx jasmine js/server.spec.js
-Randomized with seed 48682
+(base) qayyuma@Ayaans-MacBook-Pro hw8 % jasmine js/server.spec.js
+Randomized with seed 11702
 Started
 Server running on port 3000
-.......Online is not a valid method!
-2024-02-26 is not a valid date!
-2024-03-01 is not a valid date!
-.Invalid start date format. Please use YYYYMMDD format.
-Database operation failed: Error: Unknown column 'DTSTAMP' in 'field list'
-    at PromiseConnection.query (/Users/qayyuma/Downloads/hw6/node_modules/mysql2/promise.js:94:22)
-    at insertIntoDatabase (/Users/qayyuma/Downloads/hw6/js/processor.js:186:30)
-    at MakeReservation (/Users/qayyuma/Downloads/hw6/js/processor.js:168:15)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: "INSERT INTO Users (ATTENDEE, DTSTART, METHOD, STATUS, DTSTAMP) VALUES ('John Doe', '20240220T123456', 'REQUEST', 'CONFIRMED', '20240219T123456')",
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'DTSTAMP' in 'field list'"
-}
-..
-
-
-10 specs, 0 failures
-Finished in 0.069 seconds
-Randomized with seed 48682 (jasmine --random=true --seed=48682)
-(base) qayyuma@nbp-134-227 hw6 % npx jasmine js/server.spec.js
-Randomized with seed 62934
-Started
-Server running on port 3000
-Invalid start date format. Please use YYYYMMDD format.
-..........
+.......Invalid start date format. Please use YYYYMMDD format.
+...
 
 
 10 specs, 0 failures
 Finished in 0.047 seconds
-Randomized with seed 62934 (jasmine --random=true --seed=62934)
+Randomized with seed 11702 (jasmine --random=true --seed=11702)
