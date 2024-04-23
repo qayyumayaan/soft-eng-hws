@@ -1,11 +1,11 @@
 (base) qayyuma@Ayaans-MacBook-Pro hw8 % jasmine js/server.spec.js
-Randomized with seed 11702
+Randomized with seed 67455
 Started
 Server running on port 3000
-.......Invalid start date format. Please use YYYYMMDD format.
-...
+.........Invalid start date format. Please use YYYYMMDD format.
+.
 
 
 10 specs, 0 failures
-Finished in 0.047 seconds
-Randomized with seed 11702 (jasmine --random=true --seed=11702)
+Finished in 0.062 seconds
+Randomized with seed 67455 (jasmine --random=true --seed=67455)
