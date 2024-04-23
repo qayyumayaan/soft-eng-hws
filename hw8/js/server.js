@@ -81,7 +81,7 @@ const createServer = () => {
 // Start the server only when this file is run directly
 if (require.main === module) {
   const server = createServer();
-  const PORT = 3000;
+  const PORT = 3008;
   server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
