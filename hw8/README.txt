@@ -26,3 +26,5 @@ mysql.js is the init file. I would not recommend running that because it has no 
 Run server.js as the server. Then, in another terminal window, run mysql.js. Edit mysql.js accordingly to have it send commands to the database. 
 
 If mysql and accessing the server does not work, it is usually because of the MySQL instance. 
+
+Please make sure the server is not running when running Jasmine test cases as you may run into a conflict with ports!
